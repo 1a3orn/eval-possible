@@ -41,6 +41,7 @@ export class DataTracker {
           after: x.time,
         },
       ],
+      notes: [],
     });
     this.changeAll(withAdded);
   }
@@ -54,12 +55,13 @@ export class DataTracker {
     this.save();
   }
 
-  public edit(id: string, cb: (data: Possible) => Possible) {
+  public async edit(id: string, cb: (data: Possible) => Promise<Possible>) {
     const data = this.getAll();
     const found = data.find((x) => x.id === id);
     const filtered = data.filter((x) => x.id !== id);
     if (found) {
-      this.changeAll(filtered.concat(cb(found)));
+      const result = await cb(found);
+      this.changeAll(filtered.concat(result));
     } else {
       throw new Error("Could not find with that id");
     }

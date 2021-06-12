@@ -33,6 +33,11 @@ const eloChangeSchema = z.object({
   after: z.number(),
 });
 
+const noteSchema = z.object({
+  ...baseSchema,
+  text: z.string(),
+});
+
 export const possibleSchema = z
   .object({
     ...baseSchema,
@@ -44,6 +49,7 @@ export const possibleSchema = z
     eloChanges: z.array(eloChangeSchema),
     time: z.number(),
     timeChanges: z.array(timeChangeSchema),
+    notes: z.array(noteSchema),
   })
   .required();
 

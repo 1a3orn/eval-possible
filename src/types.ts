@@ -14,6 +14,14 @@ export type Possible = {
   timeChanges: TimeChange[];
 
   statusChanges: StatusChange[];
+
+  notes: Note[];
+};
+
+export type Note = {
+  id: string;
+  createdAt: string;
+  text: string;
 };
 
 export type EloChange = {
