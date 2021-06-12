@@ -1,13 +1,7 @@
 import prompts from "prompts";
 
-import { getTextPrompt, getTimePrompt } from "../prompt-helpers";
-import { DataTracker } from "../DataTracker";
-
-type NewPossible = {
-  name: string;
-  description: string;
-  time: number;
-};
+import { getTextPrompt, getTimePrompt } from "../../prompt-helpers";
+import { DataTracker, NewPossible } from "../../DataTracker";
 
 type Choice = "save-end" | "save-again" | "trash-end" | "trash-again";
 

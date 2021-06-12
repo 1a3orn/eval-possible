@@ -3,7 +3,6 @@ export const getTimeDisplayValue = (
   options: { hoursInDay: number; daysInWeek: number }
 ) => {
   const { hoursInDay, daysInWeek } = options;
-  console.log(options);
   if (minutes < 60) {
     return `${minutes} minutes`;
   } else if (minutes < 60 * hoursInDay) {
