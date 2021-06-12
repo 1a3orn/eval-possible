@@ -23,6 +23,7 @@ export const viewBy = async (
   let looping = true;
 
   while (looping) {
+    console.log("\x1Bc");
     const choice = await prompts({
       type: "select",
       name: "choice",

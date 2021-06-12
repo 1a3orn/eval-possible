@@ -6,6 +6,7 @@ import { evalCompare } from "./eval-compare";
 export const evalLoop = async (tracker: DataTracker) => {
   let looping = true;
   while (looping) {
+    console.log("\x1Bc");
     const result = Math.random() > 0.5 ? "TIME" : "COMPARE";
     switch (result) {
       case "TIME":

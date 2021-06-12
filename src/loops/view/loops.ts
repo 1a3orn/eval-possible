@@ -22,6 +22,7 @@ const getCommandOptions = async () => {
 export const viewLoop = async (tracker: DataTracker) => {
   let looping = true;
   while (looping) {
+    console.log("\x1Bc");
     const commandOpts = await getCommandOptions();
     switch (commandOpts) {
       case "view-value-high":

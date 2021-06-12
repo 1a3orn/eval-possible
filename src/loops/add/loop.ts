@@ -5,14 +5,12 @@ import { DataTracker, NewPossible } from "../../DataTracker";
 
 type Choice = "save-end" | "save-again" | "trash-end" | "trash-again";
 
-const getOptions = async () => {
-  const response = await prompts([
+const getOptions = async () =>
+  (await prompts([
     getTextPrompt("name", "What is the name for the possible"),
     getTextPrompt("description", "Can you describe the possible?"),
     getTimePrompt("time"),
-  ]);
-  return response as NewPossible;
-};
+  ])) as NewPossible;
 
 const getCommandOptions = async (potential: NewPossible) => {
   const response = await prompts({
@@ -27,10 +25,10 @@ const getCommandOptions = async (potential: NewPossible) => {
         What do you want to do?
     `,
     choices: [
-      { value: "save-end", title: "Save and exit" },
-      { value: "save-again", title: "Save and make another" },
-      { value: "trash-end", title: "Trash and exit" },
-      { value: "trash-again", title: "Trash ann make another" },
+      { value: "save-end", title: "Save and exit add mode" },
+      { value: "save-again", title: "Save and make another possible" },
+      { value: "trash-end", title: "Trash and exit add mode" },
+      { value: "trash-again", title: "Trash ann make another possible" },
     ],
   });
   return response.choice as Choice;
@@ -39,6 +37,7 @@ const getCommandOptions = async (potential: NewPossible) => {
 export const addLoop = async (tracker: DataTracker) => {
   let looping = true;
   while (looping) {
+    console.log("\x1Bc");
     const options = await getOptions();
     const commandOpts = await getCommandOptions(options);
     switch (commandOpts) {
