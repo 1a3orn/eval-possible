@@ -14,5 +14,5 @@ export const getDataFromPath = (path: string): Possible[] => {
 };
 
 export const writeDataToPath = (path: string, data: Possible[]) => {
-  fs.writeFileSync(path, data.toString());
+  fs.writeFileSync(path, JSON.stringify(data));
 };
