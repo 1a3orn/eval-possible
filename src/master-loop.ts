@@ -1,7 +1,7 @@
 import prompts from "prompts";
 
 import { DataTracker } from "./DataTracker";
-import { addLoop, viewLoop } from "./loops";
+import { addLoop, viewLoop, evalLoop } from "./loops";
 
 const mainPrompt = `
     What would you like to do?
@@ -34,6 +34,7 @@ export const masterLoop = async ({
     if (choice === 1) {
       await addLoop(tracker);
     } else if (choice === 2) {
+      await evalLoop(tracker);
     } else if (choice === 3) {
       await viewLoop(tracker);
     } else if (choice === 4) {
