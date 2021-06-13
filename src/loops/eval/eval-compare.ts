@@ -9,7 +9,7 @@ const getRandomId = (data: Possible[]) => {
   return randomSample(
     data.map((x) => ({
       value: x.id,
-      weight: Math.pow(1 + max - x.eloChanges.length, 2),
+      weight: Math.pow(2 + max - x.eloChanges.length, 1.5),
     }))
   );
 };
