@@ -14,6 +14,11 @@ const getRandomId = (data: Possible[]) => {
   );
 };
 
+const newBase = () => ({
+  id: Math.random().toString(),
+  createdAt: new Date().toString(),
+});
+
 export const evalCompare = async (tracker: DataTracker) => {
   const all = tracker.getAll();
 
@@ -27,7 +32,7 @@ export const evalCompare = async (tracker: DataTracker) => {
     type: "select",
     name: "choice",
     initial: 0,
-    message: `Completing which would be more awesome.`,
+    message: `Completing which would be more awesome?`,
     choices: [{ value: "QUIT", title: "Quit" }].concat(
       [one, two].map((x) => ({
         value: x?.id,
@@ -43,7 +48,7 @@ export const evalCompare = async (tracker: DataTracker) => {
 
   const oneWon = preference.choice === one.id;
   const twoWon = !oneWon;
-  const eloChanges = getEloChanges({
+  const { victorEloAfter, loserEloAfter } = getEloChanges({
     victorElo: oneWon ? one.elo : two.elo,
     loserElo: twoWon ? one.elo : two.elo,
     victorComparisons: oneWon ? one.eloChanges.length : two.eloChanges.length,
@@ -51,15 +56,12 @@ export const evalCompare = async (tracker: DataTracker) => {
   });
 
   await tracker.edit(one.id, async (data) => {
-    const newElo = oneWon
-      ? eloChanges.victorEloAfter
-      : eloChanges.loserEloAfter;
+    const newElo = oneWon ? victorEloAfter : loserEloAfter;
     return {
       ...data,
       elo: newElo,
       eloChanges: data.eloChanges.concat({
-        id: Math.random().toString(),
-        createdAt: new Date().toString(),
+        ...newBase(),
         comparedToId: two.id,
         before: data.elo,
         after: newElo,
@@ -69,16 +71,13 @@ export const evalCompare = async (tracker: DataTracker) => {
   });
 
   await tracker.edit(two.id, async (data) => {
-    const newElo = twoWon
-      ? eloChanges.victorEloAfter
-      : eloChanges.loserEloAfter;
+    const newElo = twoWon ? victorEloAfter : loserEloAfter;
     return {
       ...data,
       elo: newElo,
       eloChanges: data.eloChanges.concat({
-        id: Math.random().toString(),
-        createdAt: new Date().toString(),
-        comparedToId: two.id,
+        ...newBase(),
+        comparedToId: one.id,
         before: data.elo,
         after: newElo,
         result: twoWon ? "victor" : "loss",
