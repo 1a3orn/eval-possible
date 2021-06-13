@@ -43,8 +43,8 @@ export const masterLoop = async ({
 }) => {
   const tracker = new DataTracker(path);
   let looping = true;
-  console.log("\x1Bc");
   while (looping) {
+    console.log("\x1Bc");
     const choice = await getOptions();
     if (choice === "add") {
       await addLoop(tracker);
