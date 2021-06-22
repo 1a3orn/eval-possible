@@ -6,12 +6,40 @@ import { viewBy } from "./view-by";
 export const viewLoop = async (tracker: DataTracker) => {
   const options = [
     {
-      title: "View with highest value on top",
-      fnc: async () => viewBy(tracker, (a, b) => b.elo - a.elo),
+      title: "View active with highest value on top",
+      fnc: async () =>
+        viewBy(
+          tracker,
+          (a, b) => b.elo - a.elo,
+          (a) => a.status === "ACTIVE"
+        ),
     },
     {
-      title: "View with lowest time on top",
-      fnc: async () => viewBy(tracker, (a, b) => a.time - b.time),
+      title: "View non-active with highest value on top",
+      fnc: async () =>
+        viewBy(
+          tracker,
+          (a, b) => b.elo - a.elo,
+          (a) => a.status !== "ACTIVE"
+        ),
+    },
+    {
+      title: "View active with lowest time on top",
+      fnc: async () =>
+        viewBy(
+          tracker,
+          (a, b) => a.time - b.time,
+          (a) => a.status === "ACTIVE"
+        ),
+    },
+    {
+      title: "View non-active with lowest time on top",
+      fnc: async () =>
+        viewBy(
+          tracker,
+          (a, b) => a.time - b.time,
+          (a) => a.status !== "ACTIVE"
+        ),
     },
     { title: "Exit View Mode", fnc: async () => "EXIT" },
   ];

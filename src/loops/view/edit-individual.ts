@@ -29,6 +29,7 @@ export const editIndividual = async (tracker: DataTracker, id: string) => {
           { value: "edit-name", title: "Change Name" },
           { value: "edit-description", title: "Change Description" },
           { value: "add-note", title: "Add Note" },
+          { value: "change-status", title: "Add Note" },
           { value: "exit", title: "Exit" },
         ],
       });
@@ -57,6 +58,28 @@ export const editIndividual = async (tracker: DataTracker, id: string) => {
             text: newText.note as string,
           }),
         };
+      } else if (choice.choice === "change-status") {
+        const newStatus = await prompts(
+          getTextPrompt(
+            "status",
+            "What is the new new text? ACTIVE / IN_PROGRESS / FINISHED /REMOVED"
+          )
+        );
+        const status = newStatus.status;
+        if (["ACTIVE", "IN_PROGRESS", "FINISHED", "REMOVED"].includes(status)) {
+          return {
+            ...data,
+            status,
+            statusChanges: data.statusChanges.concat({
+              id: Math.random().toString(),
+              createdAt: new Date().toString(),
+              after: status,
+              before: data.status,
+            }),
+          };
+        } else {
+          return data;
+        }
       } else {
         return data;
       }

@@ -7,12 +7,13 @@ import { getTimeDisplayValue } from "../../utils";
 
 export const viewBy = async (
   tracker: DataTracker,
-  sortFnc: (a: Possible, b: Possible) => number
+  sortFnc: (a: Possible, b: Possible) => number,
+  filterFnc: (a: Possible) => boolean
 ) => {
   const all = tracker.getAll();
   all.sort(sortFnc);
-  const options = all.map((x) => ({
-    title: `${x.elo} \t ${getTimeDisplayValue(x.time, {
+  const options = all.filter(filterFnc).map((x) => ({
+    title: `${x.status} \t ${x.elo} \t ${getTimeDisplayValue(x.time, {
       hoursInDay: 8,
       daysInWeek: 5,
     })} \t ${x.name}`,
