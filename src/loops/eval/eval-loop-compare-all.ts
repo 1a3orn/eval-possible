@@ -5,9 +5,8 @@ import { DataTracker } from "../../DataTracker";
 import { evalCompareSpecific  } from "./eval-compare-specific";
 
 
-export const evalCompareLoopAll = async (tracker: DataTracker) => {
+export const evalLoopCompareAll = async (tracker: DataTracker) => {
   const all = tracker.getAll().map(x => ({...x}));
-
   const shuffled = shuffle(all);
 
   let looping = true;
@@ -18,9 +17,7 @@ export const evalCompareLoopAll = async (tracker: DataTracker) => {
     if (one && two) {
         looping = await evalCompareSpecific(tracker, one, two);
     }
-
   }
-
 };
 
 

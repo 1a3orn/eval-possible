@@ -1,8 +1,7 @@
 import { DataTracker } from "../../DataTracker";
 
-import { evalTime } from "./eval-time";
-import { evalCompareRandom } from "./eval-compare-random";
-import { evalCompareLoopAll } from "./eval-compare-loop-all";
+import { evalLoopRandom } from "./eval-loop-random";
+import { evalLoopCompareAll } from "./eval-loop-compare-all";
 import { loopFactory } from "../../loop-factory";
 
 export const evalLoop = async (tracker: DataTracker) => {
@@ -15,7 +14,7 @@ export const evalLoop = async (tracker: DataTracker) => {
     {
       title: "Compare all possibles once",
       description: "Compare the things you might want to do",
-      fnc: async () => evalCompareLoopAll(tracker),
+      fnc: async () => evalLoopCompareAll(tracker),
     },
     {
       title: "Exit",
@@ -23,20 +22,4 @@ export const evalLoop = async (tracker: DataTracker) => {
     },
   ];
   await loopFactory({ options })();
-};
-
-export const evalLoopRandom = async (tracker: DataTracker) => {
-  let looping = true;
-  while (looping) {
-    console.log("\x1Bc");
-    const result = Math.random() > 0.5 ? "TIME" : "COMPARE";
-    switch (result) {
-      case "TIME":
-        looping = await evalTime(tracker);
-        break;
-      case "COMPARE":
-        looping = await evalCompareRandom(tracker);
-        break;
-    }
-  }
 };
