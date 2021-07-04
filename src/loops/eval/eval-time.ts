@@ -17,7 +17,7 @@ export const evalTime = async (tracker: DataTracker) => {
   const chosenId = randomSample(
     tracker.getAll().map((x) => ({
       value: x.id,
-      weight: Math.pow(1 + maxEvals - x.timeChanges.length, 2),
+      weight: 2 + maxEvals - x.timeChanges.length,
     }))
   );
 
